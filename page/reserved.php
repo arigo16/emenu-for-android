@@ -34,7 +34,8 @@
                 <!-- <i class="material-icons">shopping_cart</i> -->
                 <span class="label-count"><?php if ($total_menu != "0"){echo $total_menu;}?></span>
             </a>
-            <a href="javascript:void(0);" class="bars"></a>
+            <!-- <a href="javascript:void(0);" class="bars"></a> -->
+            <a style="float: left; padding-top: 14px; margin-right: -30px; padding-left: 10px; color: white;" href="index.php?page=home"><i class="material-icons">arrow_back</i></a>
             <a class="navbar-brand">E-Menu<?php if (isset($_SESSION['editdata'])){echo ' (Edit Table '.$_SESSION['no_table'].')';}?></a>
         </div>
         <div class="collapse navbar-collapse" id="navbar-collapse">
@@ -62,7 +63,7 @@
         <?php
             $today = date("Y-m-d 00:00:01");
             $today2 = date("Y-m-d 23:59:00");
-            $r = $con->query("SELECT * FROM orders WHERE (date_order BETWEEN '$today' AND '$today2') AND status_order = '1' ORDER BY date_order ASC");
+            $r = $con->query("SELECT * FROM orders WHERE status_order = '1' ORDER BY date_order ASC");
             while ($rr = $r->fetch_array()) {
         ?>
         <button type="button" data-toggle="modal" data-target="#actionModal" data-id="<?php echo $rr['id_order'];?>" class="list-group-item openModal">

@@ -30,11 +30,15 @@
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     Menu saved
                     </div>';
+
+                echo "<script>window.location='index.php?page=orders-category'</script>";
             }else{
                 $_SESSION['message'] = '<div class="alert bg-red alert-dismissible" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    Menu is already
+                    Menu is already, please delete menu from checkout
                     </div>';
+
+                echo "<script>window.location='index.php?page=orders-category'</script>";
             }
         }
     }
@@ -53,7 +57,8 @@
                 <!-- <i class="material-icons">shopping_cart</i> -->
                 <span class="label-count"><?php if ($total_menu != "0"){echo $total_menu;}?></span>
             </a>
-            <a href="javascript:void(0);" class="bars"></a>
+            <a style="float: left; padding-top: 14px; margin-right: -30px; padding-left: 10px; color: white;" href="#" onClick="history.go(-1)"><i class="material-icons">arrow_back</i></a>
+            <!-- <a href="javascript:void(0);" class="bars"></a> -->
             <a class="navbar-brand">E-Menu<?php if (isset($_SESSION['editdata'])){echo ' (Edit Table '.$_SESSION['no_table'].')';}?></a>
         </div>
         <div class="collapse navbar-collapse" id="navbar-collapse">
@@ -74,7 +79,6 @@
 
 <section class="content">
     <!-- Custom Content -->
-    <?php  isset($_SESSION['message']) ? $e=$_SESSION['message'] : $e=""; echo $e; unset($_SESSION['message']);?>
 
     <div class="row clearfix">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">

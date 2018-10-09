@@ -46,6 +46,12 @@
                 <span>History Orders</span>
             </a>
         </li>
+        <li>
+            <a href="about.php">
+                <i class="material-icons col-red">portrait</i>
+                <span>About Dev</span>
+            </a>
+        </li>
     </ul>
 </div>
 <!-- #Menu -->

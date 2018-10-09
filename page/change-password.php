@@ -57,7 +57,8 @@
                 <!-- <i class="material-icons">shopping_cart</i> -->
                 <span class="label-count"><?php if ($total_menu != "0"){echo $total_menu;}?></span>
             </a>
-            <a href="javascript:void(0);" class="bars"></a>
+            <!-- <a href="javascript:void(0);" class="bars"></a> -->
+            <a style="float: left; padding-top: 14px; margin-right: -30px; padding-left: 10px; color: white;" href="index.php?page=home"><i class="material-icons">arrow_back</i></a>
             <a class="navbar-brand">E-Menu<?php if (isset($_SESSION['editdata'])){echo ' (Edit Table '.$_SESSION['no_table'].')';}?></a>
         </div>
         <div class="collapse navbar-collapse" id="navbar-collapse">
