@@ -27,8 +27,10 @@
 
     <!-- CSS -->
     <link rel="icon" href="favicon.ico" type="image/x-icon">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
+    <!-- <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css"> -->
+    <link href="assets/css/cyrillic.css" rel="stylesheet" type="text/css">
+    <link href="assets/css/material-icon.css" rel="stylesheet" type="text/css">
     <link href="assets/plugins/bootstrap/css/bootstrap.css" rel="stylesheet">
     <link href="assets/plugins/waitme/waitMe.css" rel="stylesheet" />
     <link href="assets/plugins/jquery-spinner/css/bootstrap-spinner.css" rel="stylesheet">

@@ -1,9 +1,11 @@
 <?php
 	session_start();
 	include '../include/config.php';
+	date_default_timezone_set("Asia/Jakarta");
 
 	$user = $_POST['username'];
 	$pass = md5($_POST['password']);
+	$now = date("Y-m-d H:i:s");
 
 	$r = $con->query("SELECT * FROM users WHERE username = '$user' AND password = '$pass' AND authorization = 'Waiter'");
 	if ($r -> num_rows > 0){
@@ -12,6 +14,7 @@
 			$_SESSION['fullname'] = $rr['fullname'];
 			$_SESSION['authorization'] = $rr['authorization'];
 		}
+		$con->query("UPDATE users SET LastLogin='$now' WHERE username='$user'");
 		header("location:../index.php");
 	}else{
 		$_SESSION['error'] = '<div class="alert bg-red alert-dismissible" role="alert">
