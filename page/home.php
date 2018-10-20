@@ -1,6 +1,8 @@
 <?php
+    $usernameID = $_SESSION['username'];
+    
     // Hitung qty checkout
-    $result = $con->query("SELECT COUNT(id_menu) FROM orderdetails_temp");
+    $result = $con->query("SELECT COUNT(id_menu) FROM orderdetails_temp WHERE username='$usernameID'");
     $row = $result->fetch_row();
     $total_menu = $row[0];
 
@@ -65,7 +67,7 @@
             <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                 <div class="info-box bg-pink hover-expand-effect">
                     <div class="icon">
-                        <i class="material-icons">fastfood</i>
+                        <i class="material-icons">restaurant_menu</i>
                     </div>
                     <div class="content">
                         <div class="text">Total Menus Available</div>

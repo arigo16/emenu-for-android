@@ -1,4 +1,6 @@
 <?php
+    $usernameID = $_SESSION['username'];
+
     // Autonumber
     $today = date("ymd");
     $carikode = $con->query("SELECT max(id_order) as maxID FROM orders WHERE id_order LIKE 'ORD$today%'");
@@ -12,7 +14,7 @@
     if (isset($_GET['id_order'])){
         $id_order = $_GET['id_order'];
 
-        $con->query("DELETE FROM orderdetails_temp");
+        $con->query("DELETE FROM orderdetails_temp WHERE username='$usernameID'");
         unset($_SESSION['editdata']);
 
         $result = $con->query("SELECT * FROM orders WHERE id_order = '$id_order'");
@@ -30,23 +32,23 @@
             $qty = $det['qty'];
             $price_order = $det['price_order'];
             $status = $det['status'];
-            $con->query("INSERT INTO orderdetails_temp VALUES ('$id_menu', '$menu', '$qty', '$price_order', '$status')");
+            $con->query("INSERT INTO orderdetails_temp VALUES ('$id_menu', '$menu', '$qty', '$price_order', '$status', '$usernameID')");
         }
         $_SESSION['editdata'] = $_GET['id_order'];
     }
 
     // Hitung qty checkout
-    $result = $con->query("SELECT COUNT(id_menu) FROM orderdetails_temp");
+    $result = $con->query("SELECT COUNT(id_menu) FROM orderdetails_temp WHERE username='$usernameID'");
     $row = $result->fetch_row();
     $total_menu = $row[0];
 
     // Hitung total qty
-    $result = $con->query("SELECT SUM(qty) FROM orderdetails_temp");
+    $result = $con->query("SELECT SUM(qty) FROM orderdetails_temp WHERE username='$usernameID'");
     $row = $result->fetch_row();
     $total_qty = $row[0];
 
     // Hitung total price
-    $result = $con->query("SELECT SUM(price_order * qty) FROM orderdetails_temp");
+    $result = $con->query("SELECT SUM(price_order * qty) FROM orderdetails_temp WHERE username='$usernameID'");
     $row = $result->fetch_row();
     $total_price = $row[0];
     $ppn = (10 * $total_price) / 100;
@@ -56,20 +58,20 @@
     if (isset($_POST['btn_del'])){
         $id_menu = $_POST['btn_del'];
 
-        $con->query("DELETE FROM orderdetails_temp WHERE id_menu='$id_menu'");
+        $con->query("DELETE FROM orderdetails_temp WHERE id_menu='$id_menu' AND username='$usernameID'");
 
         // Hitung qty checkout
-        $result = $con->query("SELECT COUNT(id_menu) FROM orderdetails_temp");
+        $result = $con->query("SELECT COUNT(id_menu) FROM orderdetails_temp WHERE username='$usernameID'");
         $row = $result->fetch_row();
         $total_menu = $row[0];
 
         // Hitung total qty
-        $result = $con->query("SELECT SUM(qty) FROM orderdetails_temp");
+        $result = $con->query("SELECT SUM(qty) FROM orderdetails_temp WHERE username='$usernameID'");
         $row = $result->fetch_row();
         $total_qty = $row[0];
 
         // Hitung total qty
-        $result = $con->query("SELECT SUM(price_order * qty) FROM orderdetails_temp");
+        $result = $con->query("SELECT SUM(price_order * qty) FROM orderdetails_temp WHERE username='$usernameID'");
         $row = $result->fetch_row();
         $total_price = $row[0];
         $ppn = (10 * $total_price) / 100;
@@ -80,20 +82,20 @@
 
     // Clear daftar menu
     if (isset($_POST['btn_clear'])){
-        $con->query("DELETE FROM orderdetails_temp");
+        $con->query("DELETE FROM orderdetails_temp WHERE username='$usernameID'");
         
         // Hitung qty checkout
-        $result = $con->query("SELECT COUNT(id_menu) FROM orderdetails_temp");
+        $result = $con->query("SELECT COUNT(id_menu) FROM orderdetails_temp WHERE username='$usernameID'");
         $row = $result->fetch_row();
         $total_menu = $row[0];
 
         // Hitung total qty
-        $result = $con->query("SELECT SUM(qty) FROM orderdetails_temp");
+        $result = $con->query("SELECT SUM(qty) FROM orderdetails_temp WHERE username='$usernameID'");
         $row = $result->fetch_row();
         $total_qty = $row[0];
 
         // Hitung total qty
-        $result = $con->query("SELECT SUM(price_order * qty) FROM orderdetails_temp");
+        $result = $con->query("SELECT SUM(price_order * qty) FROM orderdetails_temp WHERE username='$usernameID'");
         $row = $result->fetch_row();
         $total_price = $row[0];
         $ppn = (10 * $total_price) / 100;
@@ -126,7 +128,7 @@
 
                 $con->query("INSERT INTO orders VALUES ('$id_order_edit', CURRENT_TIMESTAMP, '$no_table', '$customer', '$total_qty', '$total_price', '$ppn', '$grandtotal', '1', '$username')");
                 
-                $details = $con->query("SELECT * FROM orderdetails_temp");
+                $details = $con->query("SELECT * FROM orderdetails_temp WHERE username='$usernameID'");
                 while ($det = $details->fetch_array()) {
                     $id_menu = $det['id_menu'];
                     $qty = $det['qty'];
@@ -135,20 +137,20 @@
                     $con->query("INSERT INTO ordersdetails VALUES (NULL, '$id_order_edit', '$id_menu', '$qty', '$price_order', '$status')");
                 }
                 
-                $con->query("DELETE FROM orderdetails_temp");
+                $con->query("DELETE FROM orderdetails_temp WHERE username='$usernameID'");
 
                 // Hitung qty checkout
-                $result = $con->query("SELECT COUNT(id_menu) FROM orderdetails_temp");
+                $result = $con->query("SELECT COUNT(id_menu) FROM orderdetails_temp WHERE username='$usernameID'");
                 $row = $result->fetch_row();
                 $total_menu = $row[0];
 
                 // Hitung total qty
-                $result = $con->query("SELECT SUM(qty) FROM orderdetails_temp");
+                $result = $con->query("SELECT SUM(qty) FROM orderdetails_temp WHERE username='$usernameID'");
                 $row = $result->fetch_row();
                 $total_qty = $row[0];
 
                 // Hitung total qty
-                $result = $con->query("SELECT SUM(price_order * qty) FROM orderdetails_temp");
+                $result = $con->query("SELECT SUM(price_order * qty) FROM orderdetails_temp WHERE username='$usernameID'");
                 $row = $result->fetch_row();
                 $total_price = $row[0];
                 $ppn = (10 * $total_price) / 100;
@@ -167,7 +169,7 @@
 
                 $con->query("INSERT INTO orders VALUES ('$NewID', CURRENT_TIMESTAMP, '$no_table', '$customer', '$total_qty', '$total_price', '$ppn', '$grandtotal', '1', '$username')");
                 
-                $details = $con->query("SELECT * FROM orderdetails_temp");
+                $details = $con->query("SELECT * FROM orderdetails_temp WHERE username='$usernameID'");
                 while ($det = $details->fetch_array()) {
                     $id_menu = $det['id_menu'];
                     $qty = $det['qty'];
@@ -177,20 +179,20 @@
                 }
                 // $con->query("INSERT INTO ordersdetails SET id_order = '$NewID', id_menu = (SELECT id_menu FROM orderdetails_temp), qty = (SELECT qty FROM orderdetails_temp), price_order = (SELECT price_order FROM orderdetails_temp)");
 
-                $con->query("DELETE FROM orderdetails_temp");
+                $con->query("DELETE FROM orderdetails_temp WHERE username='$usernameID'");
 
                 // Hitung qty checkout
-                $result = $con->query("SELECT COUNT(id_menu) FROM orderdetails_temp");
+                $result = $con->query("SELECT COUNT(id_menu) FROM orderdetails_temp WHERE username='$usernameID'");
                 $row = $result->fetch_row();
                 $total_menu = $row[0];
 
                 // Hitung total qty
-                $result = $con->query("SELECT SUM(qty) FROM orderdetails_temp");
+                $result = $con->query("SELECT SUM(qty) FROM orderdetails_temp WHERE username='$usernameID'");
                 $row = $result->fetch_row();
                 $total_qty = $row[0];
 
                 // Hitung total qty
-                $result = $con->query("SELECT SUM(price_order * qty) FROM orderdetails_temp");
+                $result = $con->query("SELECT SUM(price_order * qty) FROM orderdetails_temp WHERE username='$usernameID'");
                 $row = $result->fetch_row();
                 $total_price = $row[0];
                 $ppn = (10 * $total_price) / 100;
@@ -241,7 +243,7 @@
     </div>
     <div class="list-group">
     <?php
-        $r = $con->query("SELECT id_menu, menu, qty, price_order, (qty * price_order) AS total FROM orderdetails_temp ORDER BY menu ASC");
+        $r = $con->query("SELECT id_menu, menu, qty, price_order, (qty * price_order) AS total FROM orderdetails_temp WHERE username='$usernameID' ORDER BY menu ASC");
         while ($rr = $r->fetch_array()) {
     ?>
         <li class="list-group-item">

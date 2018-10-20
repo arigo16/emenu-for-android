@@ -1,6 +1,8 @@
 <?php
+    $usernameID = $_SESSION['username'];
+
     // Hitung qty checkout
-    $result = $con->query("SELECT COUNT(id_menu) FROM orderdetails_temp");
+    $result = $con->query("SELECT COUNT(id_menu) FROM orderdetails_temp WHERE username='$usernameID'");
     $row = $result->fetch_row();
     $total_menu = $row[0];
 
@@ -19,10 +21,10 @@
         if ($qty == "") {
             echo "<script>alert('Barang tidak terdaftar')</script>";
         } else {
-            $con->query("INSERT INTO orderdetails_temp values ('$id_menu', '$menu', '$qty', '$price_order', '1')");
+            $con->query("INSERT INTO orderdetails_temp values ('$id_menu', '$menu', '$qty', '$price_order', '1', '$usernameID')");
 
             if ($con->affected_rows > 0){
-                $result = $con->query("SELECT COUNT(id_menu) FROM orderdetails_temp");
+                $result = $con->query("SELECT COUNT(id_menu) FROM orderdetails_temp WHERE username='$usernameID'");
                 $row = $result->fetch_row();
                 $total_menu = $row[0];
 

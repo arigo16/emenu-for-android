@@ -1,6 +1,8 @@
 <?php
+    $usernameID = $_SESSION['username'];
+    
     // Hitung qty checkout
-    $result = $con->query("SELECT COUNT(id_menu) FROM orderdetails_temp");
+    $result = $con->query("SELECT COUNT(id_menu) FROM orderdetails_temp WHERE username='$usernameID'");
     $row = $result->fetch_row();
     $total_menu = $row[0];
 
